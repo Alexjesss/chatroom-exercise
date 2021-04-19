@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 let counter = 0;
+let counterDisconnect = 0;
 
 port = 8080;
 
@@ -21,12 +22,17 @@ io.on('connection', (socket) => {
     console.log(counter + ' someone connected');
     socket.on('sendToAll', (message) =>{
         io.emit("displayMessage", (message));
+
+        socket.on('sendToMe', (message) =>{
+            socket.emit("displayMessage", (message));});
     });
 
     socket.on('disconnect', function () {
-        console.log( ' someone disconnected');
+        counterDisconnect++;
+        console.log(counterDisconnect + ' someone disconnected');
     });
 });
+
 
 
 
