@@ -1,14 +1,29 @@
 const express = require('express');
 const http = require('http');
-const path = require('path');
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+let counter = 0;
 
 port = 8080;
 
-const app = express();
 const clientPath = `${__dirname}/../client`;
 app.use(express.static(clientPath));
-const server = http.createServer(app);
+
 
 server.listen(port, () => {
     console.log("server running on " + port);
 });
+
+io.on('connection', (socket) => {
+    counter++;
+    console.log(counter + ' someone connected');
+
+    socket.on('disconnect', function () {
+        console.log( ' someone disconnected');
+    });
+});
+
+
+
