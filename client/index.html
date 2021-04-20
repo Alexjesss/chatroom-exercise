@@ -11,16 +11,13 @@
 </head>
 <body>
 
-<label for="input">Pick your username:</label>
-<input id="username" class="username" type="text">
-<button type="button">Enter</button>
-
 <label for="input">Write something here:</label>
 <input id="input" type="text">
 <button type="button" id="all" class="all">Send message to all users</button>
 <button type="button" id="me" class="me">Send message to only me</button>
 
 <div id="target" class="messages"></div>
+<div id='users' class="users float-right"></div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="client.js"></script>

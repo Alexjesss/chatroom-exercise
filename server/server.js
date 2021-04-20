@@ -3,9 +3,11 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+let userArray = [];
 
 let counter = 0;
 let counterDisconnect = 0;
+
 
 port = 8080;
 
@@ -19,7 +21,6 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
     counter++;
-    console.log(counter + ' someone connected');
     socket.on('sendToAll', (message) =>{
         io.emit("displayMessage", (message));
 
@@ -27,9 +28,24 @@ io.on('connection', (socket) => {
             socket.emit("displayMessage", (message));});
     });
 
+    socket.on('displayUser', (username) =>{
+        userArray.push({socketId:socket.id, username:username})
+        console.log(userArray);
+        io.emit('displayUser', (userArray));
+        console.log(username + ' connected');
+        });
+
+    
     socket.on('disconnect', function () {
         counterDisconnect++;
-        console.log(counterDisconnect + ' someone disconnected');
+
+        userArray.forEach((username, index) => {
+           if (socket.id === username.socketId){
+               userArray.splice(index,1);
+               console.log(username.username + ' disconnected');
+           }
+            io.emit('displayUser', (userArray));
+        })
     });
 });
 
