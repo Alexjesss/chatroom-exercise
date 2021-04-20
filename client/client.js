@@ -3,6 +3,7 @@ let target = document.getElementById('target');
 let users = document.getElementById('users');
 let username = prompt('What\'s your name?');
 
+
 socket.emit('displayUser', (username));
 
 document.getElementById('all').addEventListener('click', function () {

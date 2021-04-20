@@ -1,5 +1,45 @@
 .users {
-border: lightgrey solid 1px;
+    border: darkgrey solid 3px;
+    padding: 15px;
+    margin-right: 182px;
+    width: 125px;
+    position: relative;
+    top: -251px;
+    height: 251px;
+    float: right;
+    text-align: center;
+}
+
+.title {
+    width: 124px;
+    height: 20px;
+    position: absolute;
+    float: right;
+    top: 0px;
+    left: 1229px;
+    background: rgb(222,236,250);
+    background: linear-gradient(
+            180deg
+            , rgba(222,236,250,1) 0%, rgba(142,182,221,1) 100%);
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.chatbox {
+    border: lightgrey solid 5px;
     padding: 15px;
     margin-right: 15px;
+    height: 250px;
+    overflow: auto;
+    width: 80%;
+}
+
+.chatSettings {
+    position: absolute;
+    top: 250px;
+    background-color: lightgrey;
+    width: 88.30%;
+    padding: 15px;
+    right: 181px;
 }

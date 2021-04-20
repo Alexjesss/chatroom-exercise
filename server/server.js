@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 let userArray = [];
 
+
 let counter = 0;
 let counterDisconnect = 0;
 
@@ -22,10 +23,11 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
     counter++;
     socket.on('sendToAll', (message) =>{
-        io.emit("displayMessage", (message));
+        io.emit("displayMessage" , (message));
 
         socket.on('sendToMe', (message) =>{
-            socket.emit("displayMessage", (message));});
+            socket.emit("displayMessage", (message));
+        });
     });
 
     socket.on('displayUser', (username) =>{
