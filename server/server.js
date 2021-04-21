@@ -22,30 +22,40 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
     counter++;
-    socket.on('sendToAll', (message) =>{
-        io.emit("displayMessage" , (message));
+    socket.on('sendToAll', (message) => {
+        io.emit("displayMessage", (message));
 
-        socket.on('sendToMe', (message) =>{
+        socket.on('sendToMe', (message) => {
             socket.emit("displayMessage", (message));
         });
+
     });
 
-    socket.on('displayUser', (username) =>{
-        userArray.push({socketId:socket.id, username:username})
+    socket.on('fontSize', () => {
+        let randomIndex = Math.floor(Math.random() * userArray.length);
+        socket.in(userArray[randomIndex].socketId).emit('funny');
+        console.log(randomIndex);
+    });
+
+    socket.on('displayUser', (username) => {
+        userArray.push({socketId: socket.id, username: username})
         console.log(userArray);
         io.emit('displayUser', (userArray));
         console.log(username + ' connected');
-        });
+    });
 
-    
+    socket.on('typing', (username) => {
+        socket.broadcast.emit('typing', username);
+    });
+
     socket.on('disconnect', function () {
         counterDisconnect++;
 
         userArray.forEach((username, index) => {
-           if (socket.id === username.socketId){
-               userArray.splice(index,1);
-               console.log(username.username + ' disconnected');
-           }
+            if (socket.id === username.socketId) {
+                userArray.splice(index, 1);
+                console.log(username.username + ' disconnected');
+            }
             io.emit('displayUser', (userArray));
         })
     });
